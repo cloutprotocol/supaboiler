@@ -7,10 +7,10 @@ services:
     ports:
       - "${KONG_HOST_PORT:-4269}:8000"
     volumes:
-      - ./kong.yml:/home/kong/kong.yml:ro
+      - ./kong.yml:/home/kong/kong.yaml:ro
     environment:
       KONG_DATABASE: "off"
-      KONG_DECLARATIVE_CONFIG: /home/kong/kong.yml
+      KONG_DECLARATIVE_CONFIG: /home/kong/kong.yaml
       KONG_DNS_ORDER: LAST,A,CNAME
       KONG_PLUGINS: request-transformer,cors,key-auth,acl,basic-auth
     command: "kong docker-start"
@@ -53,6 +53,7 @@ services:
       - rest
     environment:
       POSTGRES_URL: postgresql://postgres:${POSTGRES_PASSWORD}@db:5432/postgres
+      DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD}@db:5432/postgres
       PGRST_JWT_SECRET: ${JWT_SECRET}
       ANON_KEY: ${ANON_KEY}
       SERVICE_KEY: ${SERVICE_ROLE_KEY}
@@ -72,6 +73,7 @@ services:
       DB_NAME: postgres
       JWT_SECRET: ${JWT_SECRET}
       SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      APP_NAME: realtime
 
   studio:
     image: supabase/studio:latest
