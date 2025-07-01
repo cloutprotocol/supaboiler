@@ -4,6 +4,7 @@ services:
   # API gateway – expose this port via Coolify/UFW (see docs §8)
   kong:
     image: kong:2.8.1
+    platform: linux/amd64
     ports:
       - "${KONG_HOST_PORT:-4269}:8000"
     volumes:
@@ -17,6 +18,7 @@ services:
 
   db:
     image: supabase/postgres:15.1.0.11
+    platform: linux/amd64
     restart: unless-stopped
     volumes:
       - db-data:/var/lib/postgresql/data
@@ -26,6 +28,7 @@ services:
 
   auth:
     image: supabase/gotrue:v2.176.1
+    platform: linux/amd64
     depends_on:
       - db
     environment:
@@ -38,6 +41,7 @@ services:
   rest:
     # Use the official PostgREST image – identical binary but available on Docker Hub
     image: postgrest/postgrest:v11.2.2
+    platform: linux/amd64
     depends_on:
       - db
     environment:
@@ -48,6 +52,7 @@ services:
   storage:
     # Pull from GitHub Container Registry – public, no auth required
     image: ghcr.io/supabase/storage-api:v1.24.7
+    platform: linux/amd64
     depends_on:
       - db
       - rest
@@ -64,6 +69,7 @@ services:
 
   realtime:
     image: supabase/realtime:v2.24.1
+    platform: linux/amd64
     depends_on:
       - db
     environment:
@@ -78,6 +84,7 @@ services:
 
   studio:
     image: supabase/studio:latest
+    platform: linux/amd64
     depends_on:
       - rest
     ports:
