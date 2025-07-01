@@ -1,0 +1,14 @@
+# Supaboiler – Git ignored files & directories
+
+# Secrets / environment overrides
+.env
+
+# Local volumes & database data
+volumes/
+volumes/**
+
+# macOS artefacts
+.DS_Store
+
+# Node / JS ecosystem (if someone adds functions)
+node_modules/ 
