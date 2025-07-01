@@ -7,10 +7,10 @@ services:
     ports:
       - "${KONG_HOST_PORT:-4269}:8000"
     volumes:
-      - ./kong.yml:/home/kong/kong.yaml:ro
+      - ./kong.yml:/home/kong/kong.yml:ro
     environment:
       KONG_DATABASE: "off"
-      KONG_DECLARATIVE_CONFIG: /home/kong/kong.yaml
+      KONG_DECLARATIVE_CONFIG: /home/kong/kong.yml
       KONG_DNS_ORDER: LAST,A,CNAME
       KONG_PLUGINS: request-transformer,cors,key-auth,acl,basic-auth
     command: "kong docker-start"
@@ -59,6 +59,7 @@ services:
       SERVICE_KEY: ${SERVICE_ROLE_KEY}
       FILE_SIZE_LIMIT: "50Mi"
       STORAGE_BACKEND: "file"
+      FILE_STORAGE_BACKEND_PATH: /var/lib/storage
       REGION: "local"
 
   realtime:
