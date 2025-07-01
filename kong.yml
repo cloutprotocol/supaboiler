@@ -1,0 +1,114 @@
+_format_version: "2.1"
+services:
+  - name: rest
+    url: http://rest:3000
+    routes:
+      - name: rest-route
+        paths:
+          - /rest/v1
+        strip_path: true
+  - name: auth
+    url: http://auth:9999
+    routes:
+      - name: auth-route
+        paths:
+          - /auth/v1
+        strip_path: true
+  - name: storage
+    url: http://storage:5000
+    routes:
+      - name: storage-route
+        paths:
+          - /storage/v1
+        strip_path: true
+  - name: realtime
+    url: http://realtime:4000/socket
+    routes:
+      - name: realtime-route
+        paths:
+          - /realtime/v1/socket
+        strip_path: false
+plugins:
+  - name: cors
+    service: rest
+    config:
+      origins:
+        - "*"
+      methods:
+        - GET
+        - POST
+        - PATCH
+        - PUT
+        - DELETE
+        - OPTIONS
+      headers:
+        - apikey
+        - Authorization
+        - content-type
+        - x-client-info
+      max_age: 86400
+      exposed_headers:
+        - content-range
+  - name: cors
+    service: auth
+    config:
+      origins:
+        - "*"
+      methods:
+        - GET
+        - POST
+        - PATCH
+        - PUT
+        - DELETE
+        - OPTIONS
+      headers:
+        - apikey
+        - Authorization
+        - content-type
+        - x-client-info
+      max_age: 86400
+  - name: cors
+    service: storage
+    config:
+      origins:
+        - "*"
+      methods:
+        - GET
+        - POST
+        - PATCH
+        - PUT
+        - DELETE
+        - OPTIONS
+      headers:
+        - apikey
+        - Authorization
+        - content-type
+        - x-client-info
+      max_age: 86400
+      exposed_headers:
+        - cache-control
+        - content-location
+        - content-range
+        - etag
+        - expires
+        - last-modified
+        - x-amz-version-id
+        - x-upsert
+  - name: cors
+    service: realtime
+    config:
+      origins:
+        - "*"
+      methods:
+        - GET
+        - POST
+        - PATCH
+        - PUT
+        - DELETE
+        - OPTIONS
+      headers:
+        - apikey
+        - Authorization
+        - content-type
+        - x-client-info
+      max_age: 86400 
