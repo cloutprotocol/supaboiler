@@ -45,7 +45,8 @@ services:
       PGRST_JWT_SECRET: ${JWT_SECRET}
 
   storage:
-    image: supabase/storage-api:v0.46.6
+    # Pull from GitHub Container Registry – public, no auth required
+    image: ghcr.io/supabase/storage-api:v1.24.7
     depends_on:
       - db
       - rest
