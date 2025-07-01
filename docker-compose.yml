@@ -35,7 +35,8 @@ services:
       API_EXTERNAL_URL: http://kong:8000
 
   rest:
-    image: supabase/postgrest:v11.2.2
+    # Use the official PostgREST image – identical binary but available on Docker Hub
+    image: postgrest/postgrest:v11.2.2
     depends_on:
       - db
     environment:
